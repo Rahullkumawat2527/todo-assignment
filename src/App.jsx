@@ -6,11 +6,9 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { COLUMNS } from './utils/constants';
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-// Lazy load components
-const TodoColumn = lazy(() => import('./components/TodoColumn'));
+const TodoColumn = lazy(() => import("./components/TodoColumn"))
 const TodoForm = lazy(() => import('./components/TodoForm'));
 
-// Loading fallback
 const LoadingFallback = () => (
   <div className="flex justify-center items-center h-32">
     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -41,7 +39,6 @@ const App = () => {
     mode: 'onBlur'
   });
 
-  // Memoized filtered todos
   const filteredTodos = useMemo(() => {
     const searchLower = searchTerm.toLowerCase();
     return todos.filter(todo =>
@@ -50,7 +47,6 @@ const App = () => {
     );
   }, [todos, searchTerm]);
 
-  // Memoized todos by status
   const getTodosByStatus = useCallback((status) => {
     return filteredTodos.filter(todo => todo.status === status);
   }, [filteredTodos]);
@@ -59,7 +55,7 @@ const App = () => {
     setShowForm(true);
     setEditingTodo(null);
     reset();
-    // Scroll to form on mobile
+
     setTimeout(() => {
       document.getElementById('todo-form-container')?.scrollIntoView({ 
         behavior: 'smooth', 
@@ -106,7 +102,7 @@ const App = () => {
     setValue('title', todo.title);
     setValue('description', todo.description);
     setValue('priority', todo.priority);
-    // Scroll to form on mobile
+
     setTimeout(() => {
       document.getElementById('todo-form-container')?.scrollIntoView({ 
         behavior: 'smooth', 
@@ -138,7 +134,6 @@ const App = () => {
     }));
   }, [setTodos]);
 
-  // Memoized column counts
   const columnCounts = useMemo(() => ({
     list: getTodosByStatus('list').length,
     progress: getTodosByStatus('progress').length,
@@ -148,7 +143,6 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 relative">
-        {/* Header */}
         <div className="mb-4 sm:mb-8">
           <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-1 sm:mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
             TaskFlow Todo
@@ -158,7 +152,6 @@ const App = () => {
           </p>
         </div>
 
-        {/* Search and Create Bar - Fixed positioning context */}
         <div className="sticky top-0 z-20 bg-gradient-to-br from-gray-50 to-gray-100 pt-2 pb-3 -mt-2">
           <div className="bg-white rounded-xl shadow-md p-3 sm:p-4">
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
@@ -198,7 +191,6 @@ const App = () => {
           </div>
         </div>
 
-        {/* Form Container - Higher z-index on mobile */}
         <div 
           id="todo-form-container"
           className={`transition-all duration-300 ease-in-out overflow-hidden ${
@@ -223,7 +215,6 @@ const App = () => {
           </div>
         </div>
 
-        {/* Columns Container - Lower z-index */}
         <div className="relative z-10">
           <Suspense fallback={<LoadingFallback />}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
@@ -241,7 +232,6 @@ const App = () => {
           </Suspense>
         </div>
 
-        {/* Footer Stats */}
         <div className="mt-4 sm:mt-8 bg-white rounded-lg shadow-sm p-3 sm:p-4 relative z-10">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm gap-2 sm:gap-0">
             <div className="text-gray-600">

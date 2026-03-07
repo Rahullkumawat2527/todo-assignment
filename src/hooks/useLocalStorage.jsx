@@ -27,7 +27,7 @@ export const useLocalStorage = (key, initialValue) => {
       } catch (error) {
         console.error(`Error writing to localStorage key "${key}":`, error);
       }
-    }, 300); // Debounce for 300ms
+    }, 300); 
 
     return () => clearTimeout(timeoutId);
   }, [key, storedValue]);

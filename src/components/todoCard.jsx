@@ -10,7 +10,6 @@ const TodoCard = ({ todo, onStatusChange, onEdit, onDelete }) => {
 
     const permissions = STATUS_PERMISSIONS[todo.status];
 
-    // Close menu when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -26,7 +25,6 @@ const TodoCard = ({ todo, onStatusChange, onEdit, onDelete }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    // Close menu on escape key
     useEffect(() => {
         const handleEscape = (event) => {
             if (event.key === 'Escape') {
@@ -69,7 +67,6 @@ const TodoCard = ({ todo, onStatusChange, onEdit, onDelete }) => {
     const nextStatus = getNextStatus();
     const nextStatusLabel = getNextStatusLabel();
 
-    // Don't show menu for done tasks (no actions)
     if (todo.status === 'done') {
         return (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 sm:p-4 hover:shadow-md transition-shadow">

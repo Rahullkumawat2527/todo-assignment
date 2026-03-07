@@ -1,25 +1,121 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     @apply bg-gray-50;
+    overscroll-behavior: none;
   }
 }
 
 @layer components {
+
   .todo-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+    @apply relative;
   }
-  
-  .column-container {
-    @apply bg-white rounded-lg shadow-sm p-4 min-h-[500px];
+
+  @media (max-width: 640px) {
+    #todo-form-container {
+      position: relative;
+      z-index: 30;
+      background: transparent;
+    }
+
+    #todo-form-container .bg-white {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    }
+
+    .grid {
+      position: relative;
+      z-index: 10;
+    }
+
+    .sticky {
+      position: -webkit-sticky;
+      position: sticky;
+    }
   }
-  
-  .form-input {
-    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+
+  html {
+    scroll-behavior: smooth;
   }
-  
-  .form-error {
-    @apply text-red-500 text-sm mt-1;
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #todo-form-container>div {
+    animation: slideDown 0.2s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* For better mobile touch targets */
+@media (max-width: 640px) {
+  button {
+    min-height: 44px;
+  }
+
+  .absolute {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 300px;
+    top: auto;
+    bottom: auto;
+  }
+
+  .absolute.right-2 {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50px;
+  }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+
+  .sticky {
+    position: -webkit-sticky;
   }
 }
